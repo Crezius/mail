@@ -52,7 +52,7 @@ if ((isset($_POST["mailConnexion"])) || (isset($_GET["user"]))){
 			$point_fin="...";
 		}
         
-		$echoListe .= "<li class=\"liste_mail\" onclick=\"afficherMail(".$donnees['id'].",'".$user."')\">
+		$Liste .= "<li class=\"liste_mail\" onclick=\"afficherMail(".$donnees['id'].",'".$user."')\">
 							<a id=\"listeMail\"  href=\"#l\">
 								".$donnees['date']." <b>".$donnees['expediteur']."</b> : ".$apercu."".$point_fin."
 							</a>
@@ -70,7 +70,7 @@ if ((isset($_POST["mailConnexion"])) || (isset($_GET["user"]))){
 		$reponse = $bdd->query($req);
 		while ($donnees = $reponse->fetch()) {
             
-			$echoMessage = "</br><p>Le : ".$donnees['date']."<br/>De : <b>".$donnees['expediteur']."</b><br/>A : <b>".$user."</b><br/><br/>".$donnees['message']."</p>";
+			$Message = "</br><p>Le : ".$donnees['date']."<br/>De : <b>".$donnees['expediteur']."</b><br/>A : <b>".$user."</b><br/><br/>".$donnees['message']."</p>";
             
 		}
 	}
@@ -150,7 +150,7 @@ if ((isset($_POST["mailConnexion"])) || (isset($_GET["user"]))){
 			<ul id="_liste_mail">
 				<?php
 					if($Liste!="") {
-                        echo Liste
+                        echo $Liste;
                     }
 				?>
 			</ul>
@@ -158,7 +158,7 @@ if ((isset($_POST["mailConnexion"])) || (isset($_GET["user"]))){
 		<div id="droite">
 			<?php
 				if($Message!="") {
-                    echo $Message
+                    echo $Message;
                 }
 			?>
 		</div>
