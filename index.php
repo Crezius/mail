@@ -103,7 +103,19 @@ if ((isset($_POST["mailConnexion"])) || (isset($_GET["user"]))){
 						window.location.href="index.php?user=" + user + '&id=' + id;
 					}
 				}	
+			}function ajouterMail(user){
+				xhr = new XMLHttpRequest();
+				
+				xhr.open('GET', 'http://localhost/DIP/test/mail/index.php?user=' + user);
+				xhr.send(null);
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == 4) {
+						window.location.href="index.php?user=" + user + '&id=' + id;
+					}
+				}	
 			}
+                
+            
 			
 			function supprimer(id,user){
 				xhr = new XMLHttpRequest();
@@ -139,7 +151,7 @@ if ((isset($_POST["mailConnexion"])) || (isset($_GET["user"]))){
 				<div id="_Message">
 					<label for="message">Message:  </label>
 					<input type="text" id="message" name="message"  style="width:100%" maxlength="300"/>
-					<input type="submit" value="Envoyer" id="btnEnvoyer">
+					<input type="submit" value="Envoyer" <?php echo "onclick=ajouterMail(".$user.")"?> id="btnEnvoyer">
 				</div>
 			</form>
         </div>
