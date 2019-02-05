@@ -34,12 +34,14 @@ catch (Exception $e)
 
         $user = $_GET['user'];
 
+        /*
         if ((isset($_POST["message"])) && (isset($_POST["dest"]))){
 
             $prep = $bdd->prepare('INSERT INTO donnee (destinataire,expediteur,date,message) VALUES (?,?,NOW(),?)');
             $prep->execute(array($_POST["dest"],$user,$_POST["message"]));
 
         }
+        */
 
         /*
         $sql = "SELECT * FROM donnee WHERE destinataire='".$user."'";
@@ -77,12 +79,13 @@ catch (Exception $e)
             }
         }*/
 
+        /*
         if (isset($_GET["idSUP"])) {
 
             $prep = $bdd->prepare('DELETE FROM donnee WHERE id=?');
             $prep->execute(array($_GET["idSUP"]));
 
-        }
+        }*/
     }	
 
 ?>
@@ -125,19 +128,22 @@ catch (Exception $e)
                 
             function ajouterMail(user){
 				xhr = new XMLHttpRequest();
-				
-				xhr.open('GET', '/index.php?user=' + user);
-				xhr.send(null);
+                
+                let mess = document.getElementById('message').value;
+                let dest = document.getElementById('dest').value;
+				let req = "message="+mess+"&dest="+dest;
+				xhr.open('POST', 'ajouter.php');
+				xhr.send(req);
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState == 4) {
-						window.location.href="index.php?user=" + user + '&id=' + id;
+						//window.location.href="index.php?user=" + user + '&id=' + id;
 					}
 				}	
 			}
 			
-			function supprimer(id,user, id_liste){
+			function supprimer(id, id_liste){
 				xhr = new XMLHttpRequest();
-				xhr.open('DELETE', '/index.php?user=' + user + '&idSUP=' + id);
+				xhr.open('DELETE', 'supprimer.php?idSUP=' + id);
 				xhr.send(null);
 					
 				xhr.onreadystatechange = function() {
@@ -146,8 +152,12 @@ catch (Exception $e)
 					}
 				}
                 
+
                 var list_mail = document.getElementById("_liste_mail");
-                list_mail.removeChild(list_mail.childNodes[id_liste]);
+                
+                list_mail.removeChild(document.getElementById("liste_mail"+id_liste));
+                
+
 			}
 		</script>
         
@@ -160,7 +170,8 @@ catch (Exception $e)
         </div>
 		
 		<div id="creation_mail" >
-			<form id="envoi" action="index.php<?php if($user!="")echo("?user=".$user."")?>" method="post">
+		    <!-- action="index.php<?php/* if($user!="")echo("?user=".$user."") */?>" -->
+			<form id="envoi"  method="post">
 				<div id="_Destinataire">
 					<label for="dest">Destinataire:  </label>
 					<input type="text" id="dest" name="dest" style="width:100%" maxlength="20"/>
@@ -168,7 +179,7 @@ catch (Exception $e)
 				<div id="_Message">
 					<label for="message">Message:  </label>
 					<input type="text" id="message" name="message"  style="width:100%" maxlength="300"/>
-					<input type="submit" value="Envoyer" <?php echo "onclick=ajouterMail(".$user.")"?> id="btnEnvoyer">
+					<input type="submit" value="Envoyer" <?php echo "onclick=ajouterMail('".$user."')"?> id="btnEnvoyer">
 				</div>
 			</form>
         </div>
@@ -179,21 +190,11 @@ catch (Exception $e)
             <input type="submit" value="FLETCH"  onclick="listerMail(<?php echo "'$user'"?>)" id="fletch">
 
 			<ul id="_liste_mail">
-				<?php
-					if($Liste!="") {
-                        echo $Liste;
-                    }
-				?>
+				
 			</ul>
 		</div>
 		<div id="droite">
 		
-
-			<?php
-				if($Message!="") {
-                    echo $Message;
-                }
-			?>
 		</div>
 	</body>
 </html>

@@ -8,7 +8,6 @@
             $user="";
             $Liste="";
             $Message="";
-            $indice=0;
 
 
             try {
@@ -19,7 +18,7 @@
 
             if(isset($_GET['user'])) {
 
-                
+                $indice=0;
                 $prep = $bdd->prepare("SELECT * FROM donnee WHERE destinataire=?");
                 $prep->execute(array($_GET["user"]));
                 
@@ -32,11 +31,11 @@
 
                     }
 
-                    echo "<li class=\"liste_mail\" onclick=\"afficherMail(".$donnees['id'].")\">
+                    echo "<li id=\"liste_mail".$indice."\" class=\"liste_mail\" onclick=\"afficherMail(".$donnees['id'].")\">
                                 <a id=\"listeMail\"  href=\"#l\">
-                                    ".$donnees['date']." <b>".$donnees['expediteur']."</b> : ".$apercu."".$point_fin."
+                                    ".$donnees['date']." <b>".$donnees['expediteur']."</b> ".$donnees['id']." : ".$apercu."".$point_fin."
                                 </a>
-                                <a id=\"croix\" onclick=\"supprimer(".$donnees['id'].",'".$user."', '".$indice."')\" href=\"#\">
+                                <a id=\"croix\" onclick=\"supprimer(".$donnees['id'].", '".$indice."')\" href=\"#\">
                                     <span class=\"croixgauche\"></span>
                                     <span class=\"croixdroite\"></span>
                                 </a>
