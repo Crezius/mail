@@ -1,0 +1,136 @@
+#Connexion{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+	text-align:center;
+    height: 5vh;
+    box-shadow: 2px 3px 5px 0px #656565;
+	padding-top:0.5%;
+	padding-bottom:0.5%;
+	margin-bottom:2vh;
+}
+
+h1 {
+    color: #fefefe;
+}
+
+#form_connexion {
+    margin-top: 20;
+}
+
+#creation_mail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 5vh;
+    box-shadow: 2px 3px 5px 0px #656565;
+    background-color: #eee;
+	margin-bottom:2vh;
+}
+
+#envoi{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+    background-color: #eee;
+    margin-top: 16px;
+    width: 100%;
+}
+
+#_Destinataire {
+    display: flex;
+    flex-direction: row;
+	float:left;
+	width:15%
+}
+#_Message {
+    display: flex;
+    flex-direction: row;
+	float:right;
+	width:60%;
+}
+
+#message, #dest, #btnEnvoyer {
+    margin-left: 5px;    
+}
+
+#btnEnvoyer
+{
+	float:right;
+}
+#gauche {
+	float:left;
+	width:30%;
+	padding-left: 1vw;
+
+}
+#droite {
+	float:right;
+	width:55%;
+	background-color:white;
+	height:75%;
+    box-shadow: 2px 3px 5px 0px #656565;
+	padding-left:5%;
+	padding-right:5%;
+}
+
+.croixgauche,
+.croixdroite {
+  position: relative;
+  display: block;
+  height: 4px;
+  width: 20px;
+  border-radius: 2px;
+  background: red;
+}
+
+.croixgauche {
+    transform: rotate(-45deg);
+    top: -1;
+    right: 5;
+    transform-origin: 20px 2px;
+}
+
+.croixdroite {
+    transform: rotate(45deg);
+    top: 9;
+    right: 5;
+    transform-origin: 20px 2px;
+}
+
+.liste_mail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #eee;
+    box-shadow: 2px 3px 5px 0px #656565;
+    padding: 0vh 1vh; 
+    height: 10vh;
+}
+
+#listeMail{
+	float:left;
+    width: 15vw;
+	text-decoration:none;
+	color:black;
+}
+ul{
+	list-style:none;
+	margin:0;
+	padding:0;
+	width:100%;
+}
+li{			
+	width:100%;
+	margin:1%;
+}
+html{
+	font-family:calibri;
+	background-color:silver;
+}
+
+		
+		
