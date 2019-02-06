@@ -15,13 +15,17 @@
             } catch (Exception $e) {
                 die('Erreur : ' . $e->getMessage());
             }
-            if ((isset($_POST["message"])) && (isset($_POST["dest"]))){
-                        print($_POST["message"]);
 
             $prep = $bdd->prepare('INSERT INTO donnee (destinataire,expediteur,date,message) VALUES (?,?,NOW(),?)');
-            $prep->execute(array($_POST["dest"], "quelqun",$_POST["message"]));
+            //$prep->execute(array("test", "test", "test123"));
+            
+            $prep->execute(array($_POST["dest"], $_POST['user'], $_POST["message"]));
 
-        }
+        //}
 
 
         ?>
+        
+        <script>
+           console.log(<?php echo $_POST['dest']." ".$_POST['user']." ".$_POST['message'];?>);
+        </script>

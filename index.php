@@ -20,19 +20,13 @@ catch (Exception $e)
 		die('Erreur : ' . $e->getMessage());
 }
 
-    function maj_titre(){
+
+
+
     
-        if (isset($_GET["user"])){
-
-            echo "<h1>Ma mail-lerie : ".$_GET['user']."</h1>";
-        }
-    }
 
 
-    if (isset($_GET['user'])){
-
-
-        $user = $_GET['user'];
+    
 
         /*
         if ((isset($_POST["message"])) && (isset($_POST["dest"]))){
@@ -85,8 +79,7 @@ catch (Exception $e)
             $prep = $bdd->prepare('DELETE FROM donnee WHERE id=?');
             $prep->execute(array($_GET["idSUP"]));
 
-        }*/
-    }	
+        }*/	
 
 ?>
 
@@ -103,13 +96,8 @@ catch (Exception $e)
 				
 				xhr.open('GET', 'get.php?id=' + id);
 				xhr.send(null);
-				xhr.onreadystatechange = function() {
-					if (xhr.readyState == 4) {
-                        
-                        
-						document.getElementById('droite').innerHTML= xhr.responseText;
-					}
-				}    
+
+                return false;
 			}
                 
             function listerMail(user){
@@ -117,61 +105,66 @@ catch (Exception $e)
 				
 				xhr.open('GET', 'list.php?user=' + user);
 				xhr.send(null);
-				xhr.onreadystatechange = function() {
-					if (xhr.readyState == 4) {
-                        
-                        
-						document.getElementById('_liste_mail').innerHTML= xhr.responseText;
-					}
-				}    
+
+                
+                return false;
 			}    
                 
             function ajouterMail(user){
 				xhr = new XMLHttpRequest();
                 
-                let mess = document.getElementById('message').value;
-                let dest = document.getElementById('dest').value;
-				let req = "message="+mess+"&dest="+dest;
-				xhr.open('POST', 'ajouter.php');
-				xhr.send(req);
-				xhr.onreadystatechange = function() {
-					if (xhr.readyState == 4) {
-						//window.location.href="index.php?user=" + user + '&id=' + id;
-					}
-				}	
+                //let mess = document.getElementById('message').value;
+                //let dest = document.getElementById('dest').value;
+				//let req = "message="+mess+"&dest="+dest;
+				
+                var formElement = document.getElementById("envoi");
+                var formData = new FormData(formElement);
+
+                xhr.open('POST', 'ajouter.php');
+				formData.append("user", user);
+                
+                alert(formData.get('dest'));
+                xhr.send(formData);
+                
+                document.getElementById('message').value = "";
+                document.getElementById('dest').value = "";
+                
+                return false;
 			}
+                
+                
 			
 			function supprimer(id, id_liste){
 				xhr = new XMLHttpRequest();
 				xhr.open('DELETE', 'supprimer.php?idSUP=' + id);
 				xhr.send(null);
-					
-				xhr.onreadystatechange = function() {
-					if (xhr.readyState == 4) {
-						//window.location.href="index.php?user=" + user;
-					}
-				}
-                
 
-                var list_mail = document.getElementById("_liste_mail");
                 
+                var list_mail = document.getElementById("_liste_mail");
                 list_mail.removeChild(document.getElementById("liste_mail"+id_liste));
                 
-
+                return false;
 			}
+                
+            function connexion(user){
+				xhr = new XMLHttpRequest();
+				xhr.open('GET', 'connexion.php?user=' + user);
+				xhr.send(null);
+                
+                return false;
+			}
+                
 		</script>
         
         <div id="Connexion" <?php if($user!="")echo ("style=\"background-color:#055ddd\"")?>>
-            <?php maj_titre(); ?>   
-            <form id="form_connexion" action="index.php" method="get">
+            <form id="form_connexion" onsubmit="return connexion('<?=$user?>')" method="get">
 				<input type="text" name="user" maxlength="20"/>
 				<input type="submit" value="Connexion">
 			</form>
         </div>
 		
 		<div id="creation_mail" >
-		    <!-- action="index.php<?php/* if($user!="")echo("?user=".$user."") */?>" -->
-			<form id="envoi"  method="post">
+			<form id="envoi" onsubmit="return ajouterMail(<?php echo "'$user'" ?>)">
 				<div id="_Destinataire">
 					<label for="dest">Destinataire:  </label>
 					<input type="text" id="dest" name="dest" style="width:100%" maxlength="20"/>
@@ -179,7 +172,7 @@ catch (Exception $e)
 				<div id="_Message">
 					<label for="message">Message:  </label>
 					<input type="text" id="message" name="message"  style="width:100%" maxlength="300"/>
-					<input type="submit" value="Envoyer" <?php echo "onclick=ajouterMail('".$user."')"?> id="btnEnvoyer">
+					<input type="submit" value="Envoyer"  id="btnEnvoyer">
 				</div>
 			</form>
         </div>
